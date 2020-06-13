@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View,Button } from 'react-native'
 
 export default class AboutScreen extends Component {
     render() {
         return (
-            <View>
-                <Text> About Screen </Text>
+            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                <Text style={{fontSize:25}}> Welcome on Home Screen </Text>
+                <View style={{width:350,flexDirection:'row',justifyContent:'space-between'}}>
+                    <Button title="Home" onPress={() => { this.props.navigation.navigate('Home')}} />
+                    <Button title="Contact" onPress={() => { this.props.navigation.navigate('Contact')}} />
+                    <Button title="Back" onPress={() => { this.props.navigation.goBack()}} />
+                    <Button title="Back To Home" onPress={() => { this.props.navigation.popToTop()}} />
+                </View>
             </View>
         )
     }

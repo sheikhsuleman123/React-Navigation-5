@@ -16,8 +16,8 @@ export default class App extends Component {
     return (
       <NavigationContainer>
          <Stack.Navigator>
-         <Stack.Screen name="About" component={AboutScreen} />
          <Stack.Screen name="Home" component={HomeScreen} />
+         <Stack.Screen name="About" component={AboutScreen} />
          <Stack.Screen name="Contact" component={ContactScreen} />
         </Stack.Navigator>
       </NavigationContainer>
