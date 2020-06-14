@@ -3,9 +3,10 @@ import { Text, View,Button } from 'react-native'
 
 export default class AboutScreen extends Component {
     render() {
+        const {text} = this.props.route.params;
         return (
             <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                <Text style={{fontSize:25}}> Welcome on Home Screen </Text>
+                <Text style={{fontSize:25}}> Welcome {text} on About Screen </Text>
                 <View style={{width:350,flexDirection:'row',justifyContent:'space-between'}}>
                     <Button title="Home" onPress={() => { this.props.navigation.navigate('Home')}} />
                     <Button title="Contact" onPress={() => { this.props.navigation.navigate('Contact')}} />
