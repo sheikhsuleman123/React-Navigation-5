@@ -16,9 +16,39 @@ export default class App extends Component {
     return (
       <NavigationContainer>
          <Stack.Navigator>
-         <Stack.Screen name="Home" component={HomeScreen} />
-         <Stack.Screen name="About" component={AboutScreen} />
-         <Stack.Screen name="Contact" component={ContactScreen} />
+         <Stack.Screen
+          name="Home" 
+          component={HomeScreen}
+          options={{ title:'Welcome Home' ,
+          headerStyle : {
+            backgroundColor:'purple',
+          },
+          headerTintColor:'white',
+          fontWeight:'bold',
+        }}
+          />
+         <Stack.Screen 
+         name="About" 
+         component={AboutScreen} 
+         options={{ title:'Welcome About',
+         headerStyle : {
+          backgroundColor:'purple',
+        },
+        headerTintColor:'white',
+        fontWeight:'bold',
+      }} 
+         />
+         <Stack.Screen 
+         name="Contact" 
+         component={ContactScreen} 
+         options={{ title:'Welcome Contact',
+         headerStyle : {
+          backgroundColor:'purple',
+        },
+        headerTintColor:'white',
+        fontWeight:'bold',
+        }}
+         />
         </Stack.Navigator>
       </NavigationContainer>
     )
