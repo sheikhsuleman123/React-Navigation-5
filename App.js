@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import ContactScreen from './screens/ContactScreen';
+import TodoScreen from './screens/TodoScreen';
 
 function LogoTitle() {
   return(
@@ -51,11 +52,19 @@ export default class App extends Component {
          component={AboutScreen} 
          options={{ title:'Welcome About' }}
          />
+
          <Stack.Screen 
          name="Contact" 
          component={ContactScreen} 
          options={{ title:'Welcome Contact' }}
          />
+
+<Stack.Screen 
+         name="Todo" 
+         component={TodoScreen} 
+         options={{ title:'Welcome on Todo' }}
+         />
+
         </Stack.Navigator>
       </NavigationContainer>
     )

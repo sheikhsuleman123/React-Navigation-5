@@ -27,6 +27,7 @@ export default class HomeScreen extends Component {
                 <View style={{width:200,flexDirection:'row',justifyContent:'space-between'}}>
                     <Button title="About" onPress={() => { this.props.navigation.navigate('About', {text : this.state.name} )}} />
                     <Button title="Contact" onPress={() => { this.props.navigation.navigate('Contact', {text : this.state.name} )}} />
+                    <Button title="Todo" onPress={() => { this.props.navigation.navigate('Todo', {text : this.state.name} )}} />
                 </View>
             </View>
         )
