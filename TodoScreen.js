@@ -109,27 +109,20 @@ export default class AboutScreen extends Component {
       editTodo = (id) => {
         this.state.edit = !this.state.edit
 
-        // const remainder = this.state.array1.filter((todo) => {
-        //   if(todo.title !== id) return todo;
-        // });
-
         const selectedItem = this.state.array1.find((item) => {
           if(item.title === id) return item;
         });
         console.log(selectedItem.title);
         this.setState({
-            // array1 : remainder,
             editId: selectedItem.title,
             editText : selectedItem.subtitle,
-          
           })
-        
         }
   
     list = () => {
-        return this.state.array1.map((element,index) => {
+        return this.state.array1.map(element => {
           return (
-            <View key={index} style={{backgroundColor:'#42B983',width:390,height:50,flexDirection:'row',justifyContent:'space-between',marginTop:10 }}>
+            <View style={{backgroundColor:'#42B983',width:390,height:50,flexDirection:'row',justifyContent:'space-between',marginTop:10 }}>
               <View style={{flexDirection:'row'}}>
                 <Text style={{color:"#fff",fontSize:20,paddingLeft:5}}>{element.title} | </Text> 
                 <Text style={{color:"#fff",fontSize:20,paddingLeft:5}}>{element.subtitle}</Text>
@@ -144,11 +137,11 @@ export default class AboutScreen extends Component {
         });
       };
       done = () => {
-        return this.state.array2.map((element,index) => {
+        return this.state.array2.map(element => {
           return (
             <View style={{backgroundColor:'#B3E3CD',width:390,height:50, padding: 10,flexDirection:'row',marginTop:10,justifyContent:'space-between' }}>
            
-               <View key={index} style={{flexDirection:'row'}}>
+               <View style={{flexDirection:'row'}}>
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.title} | </Text> 
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.subtitle}</Text>
               </View>
@@ -196,15 +189,15 @@ export default class AboutScreen extends Component {
     
             </View>
        
-<Text  style={styles.heading}>Todo</Text>
+<Text  style={{alignSelf:'flex-start',fontSize:25,left:12,fontweight:'bold',marginVertical:"5%"}}>Todo</Text>
    
     { this.state.edit ? 
   
     <View style={styles.editContainer}>        
           
             <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
-                <Text style={styles.title}> Priority </Text>
-                <Text style={styles.title}> Title </Text>
+                <Text style={{fontSize:20,color:'#fff',fontWeight:'bold'}}> Priority </Text>
+                <Text style={{fontSize:20,color:'#fff',fontWeight:'bold'}}> Title </Text>
             </View>    
                 <View style={{flexDirection:'row'}}>
                 <TextInput 
@@ -233,7 +226,7 @@ export default class AboutScreen extends Component {
     <View>{this.list()}</View>
 
 
-    <Text  style={styles.heading}>Done</Text>
+    <Text  style={{alignSelf:'flex-start',fontSize:25,left:12,fontweight:'bold',marginVertical:"4%"}}>Done</Text>
 
     <View>{this.done()}</View>
         
@@ -307,21 +300,6 @@ const styles = StyleSheet.create({
     threebutton:{
         flexDirection:'row',
         width:100,
-        // marginLeft:'25%',
-        // borderWidth:1,
         justifyContent:'space-between',
-        // borderColor:'red',
-    },
-    heading: {
-      alignSelf:'flex-start',
-      fontSize:25,
-      left:12,
-      fontWeight:'bold',
-      marginVertical:"5%"
-    },
-    title : {
-      fontSize:20,
-      color:'#fff',
-      fontWeight:'bold'
     }
   })

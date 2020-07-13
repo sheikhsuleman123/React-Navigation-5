@@ -59,7 +59,7 @@ export default class App extends Component {
          options={{ title:'Welcome Contact' }}
          />
 
-<Stack.Screen 
+        <Stack.Screen 
          name="Todo" 
          component={TodoScreen} 
          options={{ title:'Welcome on Todo' }}
