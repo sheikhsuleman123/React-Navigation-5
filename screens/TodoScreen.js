@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 import {addTodo, deleteTodo,deleteDoneTodo, addDoneTodo} from '../src/actions/actions';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
  class TodoScreen extends Component {
@@ -66,15 +67,15 @@ import {addTodo, deleteTodo,deleteDoneTodo, addDoneTodo} from '../src/actions/ac
     list = () => {
         return this.props.array1.map((element,index) => {
           return (
-            <View key={index} style={{backgroundColor:'#42B983',width:390,height:50,flexDirection:'row',justifyContent:'space-between',marginTop:10 }}>
+            <View key={index} style={{backgroundColor:'#663399',width:390,height:50,flexDirection:'row',justifyContent:'space-between',marginTop:10 }}>
               <View style={{flexDirection:'row'}}>
                 <Text style={{color:"#fff",fontSize:20,padding:5}}>{element.title} | </Text> 
                 <Text style={{color:"#fff",fontSize:20,padding:5}}>{element.subtitle}</Text>
               </View>
               <View style={styles.threebutton}>
-                  <Text onPress={() => this.deleteTodo(index)} style={{fontSize:28,color:'#fff'}}>x</Text>
-                  <Text onPress={() => this.editTodo(index)} style={{fontSize:28,color:'#fff'}}>/</Text>
-                  <Text onPress={() => this.addDone(index,element.title,element.subtitle)} style={{fontSize:28,color:'#fff'}}>,/</Text>
+                  <Icon onPress={() => this.deleteTodo(index)} name="close-outline" size={30} color="#fff"></Icon>
+                  <Icon onPress={() => this.editTodo(index)} name="pencil-outline" size={30} color="#fff"></Icon>
+                  <Icon onPress={() => this.addDone(index,element.title,element.subtitle)} name="checkmark-outline" size={30} color="#fff" ></Icon>
               </View>
             </View>
           );
@@ -83,14 +84,15 @@ import {addTodo, deleteTodo,deleteDoneTodo, addDoneTodo} from '../src/actions/ac
       done = () => {
         return this.props.array2.map((element,index) => {
           return (
-            <View key={index} style={{backgroundColor:'#B3E3CD',width:390,height:50, padding: 10,flexDirection:'row',marginTop:10,justifyContent:'space-between' }}>
+            <View key={index} style={{backgroundColor:'#483D8B',width:390,height:50, padding: 10,flexDirection:'row',marginTop:10,justifyContent:'space-between' }}>
                <View  style={{flexDirection:'row'}}>
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.title} | </Text> 
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.subtitle}</Text>
               </View>
               <View style={styles.endo}>
-                  <Text onPress={() => this.deleteDoneTodo(index)} style={{fontSize:35,color:'#fff'}}>x</Text>
+                  <Icon onPress={() => this.deleteDoneTodo(index)} name="close-outline" size={30} color="#fff"></Icon>
               </View>
+
            
             </View>
           );
@@ -126,13 +128,13 @@ import {addTodo, deleteTodo,deleteDoneTodo, addDoneTodo} from '../src/actions/ac
                 />
 
                 <TouchableOpacity onPress={this.addTodo} style={styles.appButtonContainer}>
-                    <Text style={styles.appButtonText}>+</Text>
+                <Icon name="add-circle-outline" size={40} color="green" ></Icon>
                 </TouchableOpacity>
     
             </View>
        
 <Text  style={styles.heading}>Todo</Text>
-   
+
     {/* { this.state.edit ? 
   
     <View style={styles.editContainer}>        
@@ -240,17 +242,8 @@ const styles = StyleSheet.create({
         borderColor:'black'
     },
     appButtonContainer: {
-        // position:'absolute',
         top:8,
-        marginLeft:'4%',
-        borderColor:'black',
-        alignItems:'center',
-        justifyContent:'center',
-        borderWidth:1,
-        backgroundColor:'#fff',
-        height:40,
-        width:40,
-        borderRadius:25,
+        marginLeft:'2%',
       },
       appButtonText: {
         fontSize: 27,
@@ -267,6 +260,7 @@ const styles = StyleSheet.create({
         marginLeft:"45%"
     },
     threebutton:{
+      paddingTop:8,
         flexDirection:'row',
         width:100,
         // marginLeft:'25%',
