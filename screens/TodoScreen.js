@@ -2,159 +2,94 @@ import React, { Component } from 'react';
 import { Text, View,Button,StyleSheet,TextInput,TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default class AboutScreen extends Component {
+import { connect } from 'react-redux';
+
+import {addTodo, deleteTodo,deleteDoneTodo, addDoneTodo} from '../src/actions/actions';
+
+
+ class TodoScreen extends Component {
     constructor(props){
         super(props);
-
-        // this.removeTodo = this.removeTodo.bind(this);
-
         this.state = {
-        edit : false,
         id:0,
         text:'',
-        editText:'',
         editId:'',
-        array1: [
-            {
-                title: "1",
-              subtitle: "Breakfast"
-            },
-            {
-              title: "2",
-              subtitle: "Lunch"
-            },
-          ],
-          array2: [
-            {
-                title: "1",
-              subtitle: "Beef"
-            },
-            {
-                title: "2",
-              subtitle: "Mutton"
-            },
-            {
-                title: "3",
-              subtitle: "Chicken"
-            },
-          ],
+        editText:'',
     }
 }
-      addTodo(){
+
+
+      addTodo = () => {
         if(this.state.text != "" && this.state.id != ""){
-
-          let oldArray = this.state.array1;
-          oldArray.push({
-            title : this.state.id,
-            subtitle : this.state.text
+          this.props.addTodo({
+            title: this.state.id,
+            subtitle: this.state.text
           })
-          this.setState({
-            array1: [...oldArray],
-            id:'',
-            text:''
-          })
-          
         }
-      }
-      addEditTodo(){
-        if(this.state.editId != "" && this.state.editText != ""){
+        this.state.text = '',
+        this.state.id = ''
+      };
 
-          let oldArray = this.state.array1;
-          oldArray.push({
-            title : this.state.editId,
-            subtitle : this.state.editText
-          })
-          this.setState({
-            array1: [...oldArray],
-            editId:'',
-            editText:'',
-            edit : false
-          })
-          
-        }
+      deleteTodo = (index) => {
+        this.props.deleteTodo(index)
       }
-      addDone(e1,e2){
-        let oldArray2 = this.state.array2;
-        oldArray2.push({
-          title : e1,
-          subtitle : e2
-        })
-        this.setState({
-          array2: [...oldArray2]
-        })
-
-        const remainder = this.state.array1.filter((todo) => {
-          if(todo.title !== e1) return todo;
-        });
-        this.setState({
-          array1: remainder,
-        });
+      
+      deleteDoneTodo = (index) => {
+        this.props.deleteDoneTodo(index)
       }
 
-
-     removeTodo = (id) =>{
-        const remainder = this.state.array1.filter((todo) => {
-          if(todo.title !== id) return todo;
-        });
-        this.setState({array1: remainder});
-      }
-
-      removeDone = (id) =>{
-        const remainder2 = this.state.array2.filter((todos) => {
-          if(todos.title !== id) return todos;
-        });
-        this.setState({array2: remainder2});
-      }
-
-      editTodo = (id) => {
-        this.state.edit = !this.state.edit
-
-        // const remainder = this.state.array1.filter((todo) => {
-        //   if(todo.title !== id) return todo;
-        // });
-
-        const selectedItem = this.state.array1.find((item) => {
-          if(item.title === id) return item;
-        });
-        console.log(selectedItem.title);
-        this.setState({
-            // array1 : remainder,
-            editId: selectedItem.title,
-            editText : selectedItem.subtitle,
-          
-          })
+      editTodo(index){
         
-        }
-  
+        if(this.state.id === '' || this.state.text === '') {
+        const editItem =  this.props.array1.find((item) => 
+        item === this.props.array1[index] );
+        console.log('edit',editItem)
+        this.setState ({
+          id : editItem.title,
+          text : editItem.subtitle,
+        })
+        this.props.deleteTodo(index)
+      }
+    }
+
+      
+     addDone(index,e1,e2) {
+       this.props.deleteTodo(index)
+
+        this.props.addDoneTodo({
+            title : e1,
+            subtitle : e2
+        })
+
+     }
+
     list = () => {
-        return this.state.array1.map((element,index) => {
+        return this.props.array1.map((element,index) => {
           return (
             <View key={index} style={{backgroundColor:'#42B983',width:390,height:50,flexDirection:'row',justifyContent:'space-between',marginTop:10 }}>
               <View style={{flexDirection:'row'}}>
-                <Text style={{color:"#fff",fontSize:20,paddingLeft:5}}>{element.title} | </Text> 
-                <Text style={{color:"#fff",fontSize:20,paddingLeft:5}}>{element.subtitle}</Text>
+                <Text style={{color:"#fff",fontSize:20,padding:5}}>{element.title} | </Text> 
+                <Text style={{color:"#fff",fontSize:20,padding:5}}>{element.subtitle}</Text>
               </View>
               <View style={styles.threebutton}>
-                  <Text onPress={() => this.removeTodo(element.title)} style={{fontSize:28,color:'#fff'}}>x</Text>
-                  <Text onPress={() => this.editTodo(element.title)} style={{fontSize:28,color:'#fff'}}>/</Text>
-                  <Text onPress={() => this.addDone(element.title,element.subtitle)} style={{fontSize:28,color:'#fff'}}>,/</Text>
+                  <Text onPress={() => this.deleteTodo(index)} style={{fontSize:28,color:'#fff'}}>x</Text>
+                  <Text onPress={() => this.editTodo(index)} style={{fontSize:28,color:'#fff'}}>/</Text>
+                  <Text onPress={() => this.addDone(index,element.title,element.subtitle)} style={{fontSize:28,color:'#fff'}}>,/</Text>
               </View>
             </View>
           );
         });
       };
       done = () => {
-        return this.state.array2.map((element,index) => {
+        return this.props.array2.map((element,index) => {
           return (
-            <View style={{backgroundColor:'#B3E3CD',width:390,height:50, padding: 10,flexDirection:'row',marginTop:10,justifyContent:'space-between' }}>
-           
-               <View key={index} style={{flexDirection:'row'}}>
+            <View key={index} style={{backgroundColor:'#B3E3CD',width:390,height:50, padding: 10,flexDirection:'row',marginTop:10,justifyContent:'space-between' }}>
+               <View  style={{flexDirection:'row'}}>
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.title} | </Text> 
                 <Text style={{color:"#fff",fontSize:20,textDecorationLine: 'line-through'}}>{element.subtitle}</Text>
               </View>
-           
               <View style={styles.endo}>
-                  <Text onPress={() => this.removeDone(element.title)} style={{fontSize:35,color:'#fff'}}>x</Text>
+                  <Text onPress={() => this.deleteDoneTodo(index)} style={{fontSize:35,color:'#fff'}}>x</Text>
               </View>
            
             </View>
@@ -190,7 +125,7 @@ export default class AboutScreen extends Component {
                 value={this.state.text}
                 />
 
-                <TouchableOpacity onPress={this.addTodo.bind(this)} style={styles.appButtonContainer}>
+                <TouchableOpacity onPress={this.addTodo} style={styles.appButtonContainer}>
                     <Text style={styles.appButtonText}>+</Text>
                 </TouchableOpacity>
     
@@ -198,7 +133,7 @@ export default class AboutScreen extends Component {
        
 <Text  style={styles.heading}>Todo</Text>
    
-    { this.state.edit ? 
+    {/* { this.state.edit ? 
   
     <View style={styles.editContainer}>        
           
@@ -228,21 +163,48 @@ export default class AboutScreen extends Component {
                 </TouchableOpacity>
             </View>
     </View>
- :  <Text> </Text> }
+ :  <Text> </Text> } */}
 
     <View>{this.list()}</View>
-
 
     <Text  style={styles.heading}>Done</Text>
 
     <View>{this.done()}</View>
         
             </View>
-            </ScrollView>
+      </ScrollView>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+  console.log("state.array1 ", state.array1)
+  return {
+    value : state.value,
+    array1 : state.array1,
+    array2 : state.array2
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      addTodo : function(value){
+        dispatch(addTodo(value));
+      },
+      deleteTodo : function(value){
+        dispatch(deleteTodo(value));
+      },
+      deleteDoneTodo : function(value){
+        dispatch(deleteDoneTodo(value));
+      },
+      addDoneTodo : function(value){
+        dispatch(addDoneTodo(value));
+      }
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(TodoScreen)
 
 const styles = StyleSheet.create({
     container: {
